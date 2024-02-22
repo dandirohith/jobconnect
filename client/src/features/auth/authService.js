@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "https://jobconnect-api.onrender.com";
+const API_URL = "https://jobconnect-api.onrender.com/";
 
 // Register user
 const register = async (userData) => {
