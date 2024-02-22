@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 const CreateJobs = () => {
   const { user } = useSelector((state) => state.auth);
@@ -28,9 +28,11 @@ const CreateJobs = () => {
     if (sumOfLengths > user.rupees) {
       toast.error("Insufficient Rupees");
     } else {
-      axios.post("https://jobconnect-api.onrender.com/api/jobs/", data).then((response) => {
-        console.log(response);
-      });
+      axios
+        .post("https://jobconnect-api.onrender.com/api/jobs/", data)
+        .then((response) => {
+          console.log(response);
+        });
       user.rupees = sumOfLengths;
 
       // Make a PUT request to update the user on the server
