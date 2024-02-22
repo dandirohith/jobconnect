@@ -28,14 +28,14 @@ const CreateJobs = () => {
     if (sumOfLengths > user.rupees) {
       toast.error("Insufficient Rupees");
     } else {
-      axios.post("http://localhost:5000/api/jobs/", data).then((response) => {
+      axios.post("https://jobconnect-api.onrender.com/api/jobs/", data).then((response) => {
         console.log(response);
       });
       user.rupees = sumOfLengths;
 
       // Make a PUT request to update the user on the server
       axios
-        .put("http://localhost:5000/api/users/update", {
+        .put("https://jobconnect-api.onrender.com/api/users/update", {
           email: user.email,
           rupees: sumOfLengths,
         })

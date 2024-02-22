@@ -3,10 +3,12 @@ import axios from "axios";
 const Jobs = () => {
   const [jobsStateArray, setJobsStateArray] = useState([]);
   useEffect(() => {
-    axios.get("http://localhost:5000/api/jobs/").then((response) => {
-      console.log(response);
-      setJobsStateArray(response.data);
-    });
+    axios
+      .get("https://jobconnect-api.onrender.com/api/jobs/")
+      .then((response) => {
+        console.log(response);
+        setJobsStateArray(response.data);
+      });
   }, []);
 
   async function handleApply() {
