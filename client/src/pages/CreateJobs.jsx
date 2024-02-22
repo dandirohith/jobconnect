@@ -21,8 +21,8 @@ const CreateJobs = () => {
     };
     const sumOfLengths =
       jobTitle.length +
-      minSalary.length +
-      maxSalary.length +
+      minSalary.toString().length +
+      maxSalary.toString().length +
       jobLocation.length;
 
     if (sumOfLengths > user.rupees) {
@@ -35,18 +35,19 @@ const CreateJobs = () => {
         });
       user.rupees = sumOfLengths;
 
-      // Make a PUT request to update the user on the server
-      axios
-        .put("https://jobconnect-api.onrender.com/api/users/update", {
-          email: user.email,
-          rupees: sumOfLengths,
-        })
-        .then((response) => {
-          console.log(response.data.message); // Log success message
-        })
-        .catch((error) => {
-          console.error(error); // Log any errors
-        });
+      try {
+        const response = axios.put(
+          "https://jobconnect-api.onrender.com/api/users/update",
+          {
+            email: user.email,
+            rupees: user.rupees,
+          }
+        );
+
+        console.log(response.data.message); // Log success message
+      } catch (error) {
+        console.error(error); // Log any errors
+      }
     }
   };
   return (

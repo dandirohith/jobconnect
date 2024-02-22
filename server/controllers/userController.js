@@ -90,17 +90,34 @@ const generateToken = (id) => {
 
 const updateUser = asyncHandler(async (req, res) => {
   const { email, rupees } = req.body;
-  const user = await User.findOne({ email });
 
-  if (user) {
-    user.rupees = rupees;
+  try {
+    // Find the user by email
+    const userToDelete = await User.findOne({ email });
 
-    await user.save();
+    if (userToDelete) {
+      // Delete the user
+      const deletedUser = await User.findOneAndDelete({ email });
 
-    res.status(200).json({ message: "User updated successfully", user });
-  } else {
-    res.status(400);
-    throw new Error("Invalid credentials");
+      const user = await User.create({
+        name: userToDelete.name,
+        email: userToDelete.email,
+        password: userToDelete.password,
+        role: userToDelete.role,
+        rupees: rupees,
+      });
+      res.status(200).json({
+        message: "User deleted and new user created successfully",
+        deletedUser,
+        newUser,
+      });
+    } else {
+      // If user not found
+      res.status(404).json({ message: "User not found" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
   }
 });
 
